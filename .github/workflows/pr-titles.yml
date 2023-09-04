@@ -1,0 +1,44 @@
+---
+name: "Validate PR title"
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+jobs:
+  main:
+    name: Validate PR title
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5.0.2 # Update to the latest version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            fix
+            feat
+            docs
+            ci
+            chore
+          scopes: | # Add allowed scopes
+            code
+            docs
+            ci
+          disallowScopes: | # Add disallowed scopes
+            release
+          requireScope: false
+          subjectPattern: ^[A-Z].+$
+          subjectPatternError: |
+            The subject "{subject}" found in the pull request title "{title}"
+            didn't match the configured pattern. Please ensure that the subject
+            starts with an uppercase character.
+          ignoreLabels: | # Add labels to ignore
+            bot
+            ignore-semantic-pull-request
+          headerPattern: '^(\\w*)(?:\\(([\\w$.\\-*/ ]*)\\))?: (.*)$' # Customize PR title format
+          headerPatternCorrespondence: type, scope, subject
+          wip: true
+          validateSingleCommit: false
