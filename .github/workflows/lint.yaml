@@ -15,7 +15,7 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v1
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.7
 
