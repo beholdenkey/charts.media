@@ -1,6 +1,6 @@
 version: 0.1
 cli:
-  version: 1.14.2
+  version: 1.15.0
 plugins:
   sources:
     - id: trunk
@@ -12,6 +12,7 @@ runtimes:
     - python@3.10.8
 lint:
   enabled:
+    - markdownlint@0.36.0
     - actionlint@1.6.25
     - checkov@2.4.9
     - git-diff-check
