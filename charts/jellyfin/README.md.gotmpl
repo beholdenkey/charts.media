@@ -1,0 +1,36 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+> **Tip**
+> You can use the default [values.yaml](values.yaml)
+
+> **Note**
+> The chart offers a neutral configuration approach by directly passing environment variables into the container via the env and secretEnv settings. This eliminates the need to individually map each configuration parameter to a specific chart parameter, thereby offering greater flexibility in configuration.
+
+
+_See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
+
+### Upgrading to a New Major Release Version
+
+A transition to a new major version of the chart (e.g., from 1.2.0 to 2.0.0) signifies the presence of breaking changes that are incompatible with previous versions and may require manual intervention.
+
+### Transitioning from Version 1.x to 2.x
+
+In Version 2.x, the application architecture has been updated to use a Deployment model instead of a StatefulSet. 
+
+The `values` section has undergone significant refactoring, particularly in the `persistence` subsection. 
+
+Due to these changes, it is highly recommended to initiate the upgrade with a fresh install.
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
