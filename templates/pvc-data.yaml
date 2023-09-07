@@ -1,3 +1,4 @@
+---
 {{- if and (.Values.persistence.data.enabled) (not .Values.persistence.data.existingClaim) (.Values.persistence.data.isPvc) }}
 apiVersion: v1
 kind: PersistentVolumeClaim
