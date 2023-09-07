@@ -1,5 +1,4 @@
 ---
-# reference: https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests
 name: "Bug report"
 description: "Create a report to help us improve."
 labels: ["bug"]
@@ -29,7 +28,7 @@ body:
     attributes:
       label: "Reproduction steps"
       render: Shell
-      description: Paste an example playbook that can be used to reproduce the problem. This will be automatically formatted into code, so no need for backticks.
+      description: Paste an example deployment that can be used to reproduce the problem. This will be automatically formatted into code, so no need for backticks.
       value: |
         ...
     validations:
@@ -65,22 +64,22 @@ body:
       required: true
 
   - type: textarea
-    id: ansible
+    id: Helm
     attributes:
-      label: "Ansible Version"
+      label: "Helm Version"
       render: Shell
       value: |
-        Paste verbatim output from "ansible --version" between quotes. This will be automatically formatted into code, so no need for backticks.
+        Paste verbatim output from "helm --version" between quotes. This will be automatically formatted into code, so no need for backticks.
     validations:
       required: true
 
   - type: textarea
-    id: collection
+    id: chart
     attributes:
-      label: "Collection Version"
+      label: "Chart Version"
       render: Shell
       value: |
-        Paste version of the collection. This will be automatically formatted into code, so no need for backticks.
+        Paste version of the Helm Chart. This will be automatically formatted into code, so no need for backticks.
     validations:
       required: true
 

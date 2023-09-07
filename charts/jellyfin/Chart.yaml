@@ -23,7 +23,7 @@ maintainers:
     email: justthered63@gmail.com
     url:
 annotations:
-  artifacthub.io/license: MIT
-  artifacthub.io/images: |
+  helm.github.io/license: MIT
+  helm.github.io/images: |
     - name: linuxserver/jellyfin
       image: docker.io/linuxserver/jellyfin:10.8.10
