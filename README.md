@@ -61,3 +61,7 @@
 | sidecarContainers                 | list   | `[]`                                     | Sidecar containers                                                                                                                        |
 | strategy                          | object | `{"type":"Recreate"}`                    | Deployment strategy                                                                                                                       |
 | tolerations                       | list   | `[]`                                     | Tolerations for the pod assignment                                                                                                        |
+
+## Acknowledgements
+
+This chart is based on the [LinuxServer.io](https://www.linuxserver.io/) [Jellyfin](https://github.com/linuxserver/docker-jellyfin) container image.
