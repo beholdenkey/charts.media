@@ -6,26 +6,21 @@ metadata:
   labels:
     {{- include "jellyfin.labels" . | nindent 4 }}
 spec:
-  {{- with .Values.strategy }}
-  strategy:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "jellyfin.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- with .Values.podAnnotations }}
       annotations:
-        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
-        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-        {{- end }}
+      {{- end }}
       labels:
         {{- include "jellyfin.selectorLabels" . | nindent 8 }}
     spec:
-      hostNetwork: {{ .Values.hostNetwork }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -33,7 +28,7 @@ spec:
       serviceAccountName: {{ include "jellyfin.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      dnsPolicy: {{ .Values.dnsPolicy }}
+              dnsPolicy: {{ .Values.dnsPolicy }}
       {{- with .Values.dnsConfig }}
       dnsConfig:
         {{- toYaml . | nindent 8 }}
@@ -48,7 +43,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          volumeMounts:
+                    volumeMounts:
             - mountPath: /config
               name: config
             - mountPath: /data
@@ -63,27 +58,18 @@ spec:
                 name: {{ include "jellyfin.fullname" . }}
           ports:
             - name: http
-              containerPort: {{ .Values.port }}
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
-              {{- if .Values.hostPort.enabled }}
-              hostPort: {{ .Values.hostPort.port }}
-              {{- end }}
-            {{- with .Values.additionalPorts }}
-            {{- toYaml . | nindent 12 }}
-            {{- end }}
-          {{- with .Values.livenessProbe }}
           livenessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.readinessProbe }}
+            httpGet:
+              path: /
+              port: http
           readinessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            httpGet:
+              path: /
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.sidecarContainers }}
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
