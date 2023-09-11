@@ -3,7 +3,7 @@ apiVersion: v2
 name: jellyfin
 description: Jellyfin Helm chart
 type: application
-version: 1.0.0
+version: 1.0.1
 appVersion: 10.8.10
 home: https://jellyfin.org
 keywords:
@@ -12,7 +12,6 @@ keywords:
   - streaming
   - tv
   - video
-  - kodi
 sources:
   - https://github.com/linuxserver/docker-jellyfin
   - https://hub.docker.com/r/linuxserver/jellyfin
@@ -21,7 +20,6 @@ icon: https://github.com/beholdenkey/charts.jellyfin/jellyfin.png
 maintainers:
   - name: Justin Bailey
     email: justthered63@gmail.com
-    url:
 annotations:
   helm.github.io/license: MIT
   helm.github.io/images: |
