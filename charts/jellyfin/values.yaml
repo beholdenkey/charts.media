@@ -13,7 +13,8 @@ hostPort:
   port: 8096
 
 # -- Additional port definitions for the pod
-additionalPorts: []
+additionalPorts:
+  []
   # - name: tcp-8920
   #   containerPort: 8920
   #   protocol: TCP
@@ -71,7 +72,7 @@ strategy:
 
 service:
   # -- Type of the service
-  type: ClusterIP
+  type: LoadBalancer
   # -- Port for the service to use
   port: 8096
 
@@ -93,7 +94,13 @@ ingress:
   tls: []
 
 # -- The resource requests and limits of the container
-resources: {}
+resources:
+  requests:
+    memory: "2Gi"
+    cpu: "1000m"
+  limits:
+    memory: "4Gi"
+    cpu: "2000m"
 
 # -- The node selector for the deployment
 nodeSelector: {}
@@ -115,7 +122,8 @@ persistence:
     # -- Config: Storage class for the volume
     storageClass: ""
     # -- Config: Annotations for the claim
-    annotations: {}
+    annotations:
+      {}
       # helm.sh/resource-policy: keep
     # -- Config: Access modes for the claim
     accessModes:
@@ -123,12 +131,13 @@ persistence:
     # -- Config: Size for the claim
     size: 2Gi
     # -- Config: Alternative data volume definition (e.g. nfs, hostPath). Used when `persistence.config.isPvc` is `false`
-    customVolume: {}
+    customVolume:
+      {}
       # hostPath:
       #   path: /path/on/host
   data:
     # -- Data: Enable persistence
-    enabled: false
+    enabled: true
     # -- Data: Persistence type is pvc. When `false`, data volume definition is read from `persistence.data.customVolume`
     isPvc: true
     # -- Data: Name of the existing claim to be used
@@ -142,7 +151,7 @@ persistence:
     accessModes:
       - ReadWriteOnce
     # -- Data: Size for the claim
-    size: 64Gi
+    size: 100Gi
     # -- Data: Alternative data volume definition (e.g. nfs, hostPath). Used when `persistence.data.isPvc` is `false`
     customVolume: {}
     # hostPath:
@@ -166,16 +175,23 @@ extraVolumes: []
 # -- Arbitrary extra volume mounts for the pod
 extraVolumeMounts: {}
 
-# -- Pod liveness probe
-livenessProbe: {}
+livenessProbe:
+  httpGet:
+    path: / # adjust if Jellyfin exposes a specific health check endpoint
+    port: http
+  initialDelaySeconds: 60
+  periodSeconds: 10
 
-# -- Pod readiness probe
 readinessProbe:
   httpGet:
+    path: / # adjust if Jellyfin exposes a specific health check endpoint
     port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
 
 # -- Init containers
-initContainers: []
+initContainers:
+  []
   # - name: init
   #   image: busybox:stable-musl
   #   command:
@@ -184,7 +200,8 @@ initContainers: []
   #     - echo "initializing..."
 
 # -- Sidecar containers
-sidecarContainers: []
+sidecarContainers:
+  []
   # - name: sidecar
   #   image: busybox:stable-musl
   #   command:
