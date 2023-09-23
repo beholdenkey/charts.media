@@ -1,7 +1,13 @@
 #!/bin/bash
 
+# Define colors
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
 log_prefix() {
-    echo "${LOG_PREFIX:-$0}"
+    echo -e "${LOG_PREFIX:-$0}"
 }
 
 _logp=6
@@ -21,7 +27,7 @@ log_set_priority() {
 }
 
 log_output() {
-    echo "$(log_prefix): $1" >&2
+    echo -e "$(log_prefix): $1" >&2
 }
 
 log_priority() {
@@ -34,13 +40,13 @@ log_priority() {
 
 log_tag() {
     case $1 in
-    0) echo "emerg" ;;
-    1) echo "alert" ;;
-    2) echo "crit" ;;
-    3) echo "err" ;;
-    4) echo "warning" ;;
-    5) echo "notice" ;;
-    6) echo "info" ;;
+    0) echo "${RED}emerg${NC}" ;;
+    1) echo "${RED}alert${NC}" ;;
+    2) echo "${RED}crit${NC}" ;;
+    3) echo "${RED}err${NC}" ;;
+    4) echo "${YELLOW}warning${NC}" ;;
+    5) echo "${YELLOW}notice${NC}" ;;
+    6) echo "${GREEN}info${NC}" ;;
     7) echo "debug" ;;
     *) echo "$1" ;;
     esac

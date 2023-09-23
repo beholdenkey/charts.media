@@ -1,16 +1,24 @@
 #!/bin/bash
 
-source "$(dirname "$0")/logging.sh"
-source "$(dirname "$0")/checks.sh"
+DIR="$(dirname "$0")"
+source "${DIR}/logging.sh"
+source "${DIR}/helper.sh"
+
+# Default cluster name
+readonly DEFAULT_CLUSTER_NAME="media-cluster"
+
+# Override cluster name with first script argument, if provided
+CLUSTER_NAME=${1:-${DEFAULT_CLUSTER_NAME}}
+
+# Validate the cluster name
+if [[ ! ${CLUSTER_NAME} =~ ^[a-zA-Z0-9-]+$ ]]; then
+    log_err "Invalid cluster name: ${CLUSTER_NAME}. It must contain only alphanumeric characters and hyphens."
+    exit 1
+fi
 
 destroy_cluster() {
     # Check if k3d is installed
     k3d_check
-    # Check if CLUSTER_NAME is set and not empty
-    if [[ -z ${CLUSTER_NAME} ]]; then
-        log_err "CLUSTER_NAME is not set or empty. Current value: '${CLUSTER_NAME}'. Please set CLUSTER_NAME first."
-        return 2
-    fi
 
     # Check if the cluster exists
     if ! k3d cluster list | grep -q "${CLUSTER_NAME}"; then
@@ -26,3 +34,5 @@ destroy_cluster() {
         return 3
     fi
 }
+
+destroy_cluster
