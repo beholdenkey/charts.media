@@ -18,10 +18,11 @@ tasks:
     cmds:
       - helm test jellyfin
 
-  cleanup:
-    desc: Cleanup resources
+  destroy-cluster:
+    desc: Destroy K3d cluster
+    env:
+      CLUSTER_NAME: "media-cluster"
     cmds:
-      - helm uninstall jellyfin
       - bash hack/cluster-destroy.sh
 
   ci-cd-pipeline:
