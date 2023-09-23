@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source "$(dirname "$0")/hack/logging.sh"
-source "$(dirname "$0")/hack/checks.sh"
+source "$(dirname "$0")/logging.sh"
+source "$(dirname "$0")/checks.sh"
 
 destroy_cluster() {
     # Check if k3d is installed
