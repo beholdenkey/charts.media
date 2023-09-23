@@ -1,0 +1,33 @@
+version: '3'
+
+tasks:
+  create-cluster:
+    desc: Create K3d cluster
+    env:
+      CLUSTER_NAME: "media-cluster"
+    cmds:
+      - bash hack/cluster-create.sh
+
+  install-helm-chart:
+    desc: Install Helm Chart
+    cmds:
+      - helm install jellyfin ./charts/jellyfin
+
+  validate-helm-chart:
+    desc: Run Helm Chart Tests
+    cmds:
+      - helm test jellyfin
+
+  cleanup:
+    desc: Cleanup resources
+    cmds:
+      - helm uninstall jellyfin
+      - bash hack/cluster-destroy.sh
+
+  ci-cd-pipeline:
+    desc: Run the entire CI/CD pipeline
+    deps:
+      - create-cluster
+      - install-helm-chart
+      - validate-helm-chart
+      - cleanup
