@@ -1,12 +1,19 @@
 #!/bin/bash
 
-source "$(dirname "$0")/logging.sh"
-source "$(dirname "$0")/cluster-create.sh"
+# Source other scripts
+DIR="$(dirname "$0")"
+source "${DIR}/logging.sh"
+source "${DIR}/helper.sh"
+source "${DIR}/start-docker.sh"
+source "${DIR}/cluster-create.sh"
+
+# Set default log priority to debug
+log_set_priority debug
 
 # Default cluster name
 readonly DEFAULT_CLUSTER_NAME="media-cluster"
 
-# Override cluster name with first script argument, if provided
+# Override cluster name with the first script argument, if provided
 CLUSTER_NAME=${1:-${DEFAULT_CLUSTER_NAME}}
 
 # Validate the cluster name
@@ -15,4 +22,15 @@ if [[ ! ${CLUSTER_NAME} =~ ^[a-zA-Z0-9-]+$ ]]; then
     exit 1
 fi
 
-create_cluster
+# Ensure Brew, Git, Helm, kubectl, and k3d are installed.
+brew_check || exit 1
+git_check || exit 1
+helm_check || exit 1
+kubectl_check || exit 1
+k3d_check || exit 1
+
+# Ensure Docker is running.
+start_docker || exit 1
+
+# Create Cluster
+create_cluster || exit 1
