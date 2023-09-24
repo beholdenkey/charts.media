@@ -1,34 +1,79 @@
 version: "3"
 
+env:
+  CLUSTER_NAME: "media-cluster"
+  NAMESPACE: "media"
+  RELEASE_NAME: "jellyfin"
+  CHART_PATH: "./charts/jellyfin"
+
 tasks:
+  create-namespace:
+    desc: Create Kubernetes namespace
+    cmds:
+      - kubectl create namespace {{.NAMESPACE}} --dry-run=client -o yaml | kubectl apply -f -
+
   create-cluster:
     desc: Create K3d cluster
-    env:
-      CLUSTER_NAME: "media-cluster"
     cmds:
       - bash hack/cluster-create.sh
 
+  add-helm-repo:
+    desc: Add Helm repositories and update
+    cmds:
+      - helm repo add <repo_name> <repo_url>
+      - helm repo update
+
   install-helm-chart:
     desc: Install Helm Chart
+    deps:
+      - create-namespace
     cmds:
-      - helm install jellyfin ./charts/jellyfin
+      - helm install {{.RELEASE_NAME}} {{.CHART_PATH}} --namespace {{.NAMESPACE}}
+
+  upgrade-helm-chart:
+    desc: Upgrade Helm Chart
+    cmds:
+      - helm upgrade {{.RELEASE_NAME}} {{.CHART_PATH}} --namespace {{.NAMESPACE}}
 
   validate-helm-chart:
     desc: Run Helm Chart Tests
     cmds:
-      - helm test jellyfin
+      - helm test {{.RELEASE_NAME}} --namespace {{.NAMESPACE}}
+
+  lint-helm-chart:
+    desc: Lint Helm Chart
+    cmds:
+      - helm lint {{.CHART_PATH}}
+
+  rollback-helm-chart:
+    desc: Rollback Helm Chart to Previous Version
+    cmds:
+      - helm rollback {{.RELEASE_NAME}} 0 --namespace {{.NAMESPACE}}
+
+  uninstall-helm-chart:
+    desc: Uninstall Helm Chart
+    cmds:
+      - helm uninstall {{.RELEASE_NAME}} --namespace {{.NAMESPACE}}
 
   destroy-cluster:
     desc: Destroy K3d cluster
-    env:
-      CLUSTER_NAME: "media-cluster"
     cmds:
       - bash hack/cluster-destroy.sh
 
-  ci-cd-pipeline:
-    desc: Run the entire CI/CD pipeline
+  logs:
+    desc: Show logs for a Helm release
+    cmds:
+      - kubectl logs -l app.kubernetes.io/instance={{.RELEASE_NAME}} --namespace {{.NAMESPACE}} --all-containers=true -f
+
+  monitor:
+    desc: Monitor resources of a Helm release
+    cmds:
+      - kubectl get pods,svc,ing -l app.kubernetes.io/instance={{.RELEASE_NAME}} --namespace {{.NAMESPACE}} --watch
+
+  validate:
+    desc: Validates the Helm Charts
     deps:
       - create-cluster
+      - add-helm-repo
       - install-helm-chart
       - validate-helm-chart
-      - destroy-cluster
