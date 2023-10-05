@@ -2,54 +2,61 @@
 
 source "$(dirname "$0")/logging.sh"
 
+# Check if a command is available
+# $1: command to check
 is_command() {
     command -v "$1" >/dev/null 2>&1
 }
 
-brew_check() {
-    if ! is_command brew; then
-        log_err "Brew is not installed. Please install Brew first."
-        exit 1
-    else
-        log_info "Brew is installed."
+# Exit with a specific message and code if a command is not available
+# $1: command to check
+# $2: error message
+# $3: exit code (optional, default: 1)
+check_command_or_exit() {
+    if ! is_command "$1"; then
+        log_err "$2"
+        exit "${3:-1}"
     fi
+}
+
+# Check if Brew is installed
+brew_check() {
+    check_command_or_exit brew "Brew is not installed. Please install Brew first."
 }
 
 # Check if Git is installed
 git_check() {
-    if ! is_command git; then
-        log_err "Git is not installed. Please install Git first."
-        exit 1
-    else
-        log_info "Git is installed."
-    fi
+    check_command_or_exit git "Git is not installed. Please install Git first."
 }
 
-# check if helm is installed
+# Check if Helm is installed
 helm_check() {
-    if ! is_command helm; then
-        log_err "Helm is not installed. Please install Helm first."
-        exit 1
-    else
-        log_info "Helm is installed."
-    fi
+    check_command_or_exit helm "Helm is not installed. Please install Helm first."
 }
 
-# check if kubectl is installed
+# Check if kubectl is installed
 kubectl_check() {
-    if ! is_command kubectl; then
-        log_err "kubectl is not installed. Please install kubectl first."
+    check_command_or_exit kubectl "kubectl is not installed. Please install kubectl first."
+}
+
+# Check if k3d is installed
+k3d_check() {
+    check_command_or_exit k3d "k3d is not installed. Please install k3d first."
+}
+
+# Validate the cluster name
+# $1: cluster name to validate
+validate_cluster_name() {
+    if [[ -z $1 || ! $1 =~ ^[a-zA-Z0-9-]+$ ]]; then
+        log_err "Invalid or empty cluster name: $1. It must contain only alphanumeric characters and hyphens."
         exit 1
-    else
-        log_info "kubectl is installed."
     fi
 }
 
-k3d_check() {
-    if ! is_command k3d; then
-        log_err "k3d is not installed. Please install k3d first."
-        exit 1
-    else
-        log_info "k3d is installed."
-    fi
+# Print a message and exit with a specific code
+# $1: message
+# $2: exit code (optional, default: 1)
+exit_with_message() {
+    log_err "$1"
+    exit "${2:-1}"
 }

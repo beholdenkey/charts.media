@@ -3,13 +3,27 @@
 source "$(dirname "$0")/logging.sh"
 source "$(dirname "$0")/helper.sh"
 
+# Function to start Docker
 start_docker() {
-    if ! is_command docker; then
-        log_err "Docker is not installed. Please install Docker and try again."
-        return 1
-    fi
+    # Check if Docker is installed
+    check_command_or_exit docker "Docker is not installed. Please install Docker and try again."
 
-    open -a Docker
+    # Platform-specific command to open Docker
+    case "$(uname -s)" in
+    Darwin)
+        open -a Docker
+        ;;
+    Linux)
+        systemctl start docker || {
+            log_err "Failed to start Docker using systemctl."
+            return 1
+        }
+        ;;
+    *)
+        log_err "Unsupported platform for this script."
+        return 1
+        ;;
+    esac
 
     log_info "Starting Docker. Please wait..."
 

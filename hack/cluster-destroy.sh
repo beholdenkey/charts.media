@@ -4,15 +4,10 @@ DIR="$(dirname "$0")"
 source "${DIR}/logging.sh"
 source "${DIR}/helper.sh"
 
-# Use environment variable for cluster name
-CLUSTER_NAME=${CLUSTER_NAME}
+# Function to validate the cluster name
+validate_cluster_name
 
-# Validate the cluster name
-if [[ -z ${CLUSTER_NAME} || ! ${CLUSTER_NAME} =~ ^[a-zA-Z0-9-]+$ ]]; then
-    log_err "Invalid or empty cluster name: ${CLUSTER_NAME}. It must contain only alphanumeric characters and hyphens."
-    exit 1
-fi
-
+# Function to destroy a cluster
 destroy_cluster() {
     # Check if k3d is installed
     k3d_check
@@ -32,4 +27,5 @@ destroy_cluster() {
     fi
 }
 
+# Call the function to destroy the cluster
 destroy_cluster
