@@ -1,9 +1,13 @@
 # Jellyfin
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 10.8.10](https://img.shields.io/badge/AppVersion-10.8.10-informational?style=flat-square)
+![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 10.8.11](https://img.shields.io/badge/AppVersion-10.8.11-informational?style=flat-square)
 
 Jellyfin Helm chart
 **Homepage:** <https://jellyfin.org>
+
+Add the Home Media Helm Charts repository to Helm:
+
+jellyfin beholdenkey/jellyfin
 
 ## Values
 
@@ -94,9 +98,9 @@ Due to these changes, it is highly recommended to initiate the upgrade with a fr
 
 ## Maintainers
 
-| Name          | Email                    | Url |
-| ------------- | ------------------------ | --- |
-| Justin Bailey | <justthered63@gmail.com> |     |
+| Name          | Email                    | Url                              |
+| ------------- | ------------------------ | -------------------------------- |
+| Justin Bailey | <justthered63@gmail.com> | <https://github.com/beholdenkey> |
 
 ## Source Code
 
