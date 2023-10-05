@@ -60,3 +60,15 @@ exit_with_message() {
     log_err "$1"
     exit "${2:-1}"
 }
+
+check_dependencies() {
+    brew_check || exit 1
+    git_check || exit 1
+    helm_check || exit 1
+    kubectl_check || exit 1
+    k3d_check || exit 1
+}
+
+ensure_docker_running() {
+    start_docker || exit 1
+}

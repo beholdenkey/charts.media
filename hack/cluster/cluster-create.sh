@@ -1,29 +1,24 @@
 #!/bin/bash
 
 # Source required scripts
-source "$(dirname "$0")/logging.sh"
-source "$(dirname "$0")/helper.sh"
-source "$(dirname "$0")/start-docker.sh"
+source "$(dirname "$0")/../util/logging.sh"
+source "$(dirname "$0")/../util/helper.sh"
+source "$(dirname "$0")/../util/start-docker.sh"
 
 # Set log priority
 log_set_priority debug
 
+CLUSTER_NAME=${1:-default-cluster-name}
+
 # Validate the cluster name
-validate_cluster_name
+CLUSTER_NAME=${1:-default-cluster-name}
 
-# Check required dependencies
-check_dependencies() {
-    brew_check || exit 1
-    git_check || exit 1
-    helm_check || exit 1
-    kubectl_check || exit 1
-    k3d_check || exit 1
-}
+# Validate the cluster name
+validate_cluster_name "${CLUSTER_NAME}"
 
-# Ensure Docker is running
-ensure_docker_running() {
-    start_docker || exit 1
-}
+# Check required dependencies and ensure Docker is running
+check_dependencies
+ensure_docker_running
 
 # Function to create a cluster
 create_cluster() {
@@ -41,3 +36,5 @@ create_cluster() {
         exit 1
     fi
 }
+
+create_cluster

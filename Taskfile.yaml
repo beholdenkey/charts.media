@@ -1,54 +1,13 @@
 version: "3"
 
-env:
-  CLUSTER_NAME: "media-cluster"
-  NAMESPACE: "media"
-  RELEASE_NAME: "jellyfin"
-  CHART_PATH: "./charts/jellyfin"
-
 tasks:
   create-cluster:
     desc: Create K3d cluster
+    vars:
+      CLUSTER_NAME:
+        sh: echo "default-cluster-name"
     cmds:
-      - bash hack/cluster-create.sh
-
-  add-helm-repo:
-    desc: Add Helm repositories and update
-    cmds:
-      - helm repo add beholdenkey https://beholdenkey.github.io/charts.media/
-      - helm repo update
-
-  create-namespace:
-    desc: Create Kubernetes namespace
-    cmds:
-      - kubectl create namespace {{.NAMESPACE}} --dry-run=client -o yaml | kubectl apply -f -
-
-  install-helm-chart:
-    desc: Install Helm Chart
-    deps:
-      - create-namespace
-    cmds:
-      - helm install {{.RELEASE_NAME}} {{.CHART_PATH}} --namespace {{.NAMESPACE}}
-
-  validate-helm-chart:
-    desc: Run Helm Chart Tests
-    cmds:
-      - helm test {{.RELEASE_NAME}} --namespace {{.NAMESPACE}}
-
-  lint-helm-chart:
-    desc: Lint Helm Chart
-    cmds:
-      - helm lint {{.CHART_PATH}}
-
-  rollback-helm-chart:
-    desc: Rollback Helm Chart to Previous Version
-    cmds:
-      - helm rollback {{.RELEASE_NAME}} 0 --namespace {{.NAMESPACE}}
-
-  uninstall-helm-chart:
-    desc: Uninstall Helm Chart
-    cmds:
-      - helm uninstall {{.RELEASE_NAME}} --namespace {{.NAMESPACE}}
+      - bash hack/cluster/cluster-create.sh {{.CLUSTER_NAME}}
 
   destroy-cluster:
     desc: Destroy K3d cluster
