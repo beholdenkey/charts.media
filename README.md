@@ -1,6 +1,33 @@
 # Home Media Helm Charts
 
-This repository contains a collection of Helm Charts for deploying various home media applications.
+![Release Charts](https://github.com/beholdenkey/media.charts/workflows/release/badge.svg)
+
+A collection of Helm Charts for deploying home media applications.
+
+## Usage
+
+Add the Home Media Helm Charts repository to Helm:
+
+```bash
+helm repo add beholdenkey https://beholdenkey.github.io/charts.media/
+```
+
+To install a chart, use the following command:
+
+```bash
+helm install $NAME beholdenkey/$CHART
+```
+
+Where:
+
+- $NAME - is the name you want to give the installed Helm App
+- $CHART_NAME - name of the chart found in charts directory
+
+Example:
+
+```bash
+helm install jellyfin beholdenkey/jellyfin
+```
 
 ## Acknowledgements
 
