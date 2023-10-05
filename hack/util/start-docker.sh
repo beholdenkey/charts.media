@@ -8,11 +8,6 @@ start_docker() {
     # Check if Docker is installed
     check_command_or_exit docker "Docker is not installed. Please install Docker and try again."
 
-    # Checking for necessary permissions
-    if [[ ${EUID} -ne 0 ]]; then
-        log_err "Please run as root."
-        exit 1
-    fi
     # Platform-specific command to open Docker
     case "$(uname -s)" in
     Darwin)
