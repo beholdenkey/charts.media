@@ -1,0 +1,7 @@
+version: "3"
+
+tasks:
+  helm-docs:
+    desc: Generate Helm Chart README.md
+    cmds:
+      - helm-docs
