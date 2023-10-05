@@ -1,10 +1,10 @@
 version: 0.1
 cli:
-  version: 1.16.0
+  version: 1.16.2
 plugins:
   sources:
     - id: trunk
-      ref: v1.2.3
+      ref: v1.2.5
       uri: https://github.com/trunk-io/plugins
 runtimes:
   enabled:
@@ -16,12 +16,12 @@ lint:
     - shellcheck@0.9.0
     - shfmt@3.6.0
     - markdownlint@0.37.0
-    - actionlint@1.6.25
-    - checkov@2.4.9
+    - actionlint@1.6.26
+    - checkov@2.5.4
     - git-diff-check
     - prettier@3.0.3
     - trivy@0.45.1
-    - trufflehog@3.56.1
+    - trufflehog@3.59.0
     - yamllint@1.32.0
 actions:
   disabled:
