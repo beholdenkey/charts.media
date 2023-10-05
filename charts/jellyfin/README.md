@@ -114,6 +114,6 @@ Due to these changes, it is highly recommended to initiate the upgrade with a fr
 
 ## Source Code
 
-* <https://github.com/linuxserver/docker-jellyfin>
-* <https://hub.docker.com/r/linuxserver/jellyfin>
-* <https://github.com/beholdenkey/charts.jellyfin>
+- <https://github.com/linuxserver/docker-jellyfin>
+- <https://hub.docker.com/r/linuxserver/jellyfin>
+- <https://github.com/beholdenkey/charts.jellyfin>
