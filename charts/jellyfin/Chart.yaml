@@ -15,8 +15,8 @@ keywords:
 sources:
   - https://github.com/linuxserver/docker-jellyfin
   - https://hub.docker.com/r/linuxserver/jellyfin
-  - https://github.com/beholdenkey/charts.jellyfin
-icon: https://github.com/beholdenkey/charts.jellyfin/jellyfin.png
+  - https://github.com/beholdenkey/charts.media
+icon: https://github.com/beholdenkey/charts.media/jellyfin.png
 maintainers:
   - name: Justin Bailey
     email: justthered63@gmail.com
