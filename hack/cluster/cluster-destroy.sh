@@ -1,18 +1,19 @@
 #!/bin/bash
 
-DIR="$(dirname "$0")"
-source "${DIR}/logging.sh"
-source "${DIR}/helper.sh"
+# Get script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Use environment variable for cluster name
-CLUSTER_NAME=${CLUSTER_NAME}
+# Source required scripts
+source "${SCRIPT_DIR}/../util/logging.sh"
+source "${SCRIPT_DIR}/../util/helper.sh"
 
-# Validate the cluster name
-if [[ -z ${CLUSTER_NAME} || ! ${CLUSTER_NAME} =~ ^[a-zA-Z0-9-]+$ ]]; then
-    log_err "Invalid or empty cluster name: ${CLUSTER_NAME}. It must contain only alphanumeric characters and hyphens."
-    exit 1
-fi
+# Get cluster name from argument
+CLUSTER_NAME=$1
 
+# Validate cluster name
+validate_cluster_name "${CLUSTER_NAME}"
+
+# Function to destroy a cluster
 destroy_cluster() {
     # Check if k3d is installed
     k3d_check
@@ -32,4 +33,5 @@ destroy_cluster() {
     fi
 }
 
+# Call the function to destroy the cluster
 destroy_cluster

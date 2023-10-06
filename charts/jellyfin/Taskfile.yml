@@ -1,0 +1,32 @@
+---
+version: "3"
+
+tasks:
+  all:
+    desc: Run lint and clean
+    deps:
+      - lint
+      - clean
+
+  lint:
+    desc: Run yamllint
+    cmds:
+      - yamllint -c .yamllint.yaml ./
+
+  yamllint:
+    desc: Alias for lint
+    cmds:
+      - task: lint
+
+  clean:
+    desc: Strip trailing spaces from yaml files
+    cmds:
+      - |
+        for file in $(find ./ \( -iname "*.yaml" -o -iname "*.yml" \)); do
+          sed -E 's/[[:space:]]*$$//' "$file" > temp_file && mv temp_file "$file"
+        done
+
+  helm-docs:
+    desc: Generate Helm Chart README.md
+    cmds:
+      - helm-docs

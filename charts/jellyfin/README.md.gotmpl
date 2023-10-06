@@ -6,6 +6,14 @@
 {{ template "chart.description" . }}
 {{ template "chart.homepageLine" . }}
 
+```bash
+helm repo add beholdenkey https://beholdenkey.github.io/charts.media/
+```
+
+```bash
+helm install {{ template "chart.name" . }} beholdenkey/{{ template "chart.name" . }}
+```
+
 {{ template "chart.requirementsSection" . }}
 
 {{ template "chart.valuesSection" . }}
