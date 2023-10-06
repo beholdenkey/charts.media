@@ -1,0 +1,24 @@
+apiVersion: v2
+name: transmission-openvpn
+description: Transmission + OpenVPN chart based on haugene/transmission-openvpn image
+type: application
+version: 1.0.0
+appVersion: 5.2.0
+home: https://haugene.github.io/docker-transmission-openvpn
+keywords:
+  - transmission
+  - openvpn
+  - transmission-openvpn
+  - torrent
+sources:
+  - https://github.com/haugene/docker-transmission-openvpn
+  - https://github.com/beholdenkey/charts.media
+icon: https://github.com/beholdenkey/charts.media/transmission.png
+maintainers:
+  - name: Justin Bailey
+    email: justthered63@gmail.com
+annotations:
+  helm.github.io/license: MIT
+  helm.github.io/images: |
+    - name: haugene/transmission-openvpn
+      image: docker.io/haugene/transmission-openvpn:4.0
