@@ -1,16 +1,17 @@
 #!/bin/bash
 
+# Get script directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Source required scripts
 source "${SCRIPT_DIR}/../util/logging.sh"
 source "${SCRIPT_DIR}/../util/helper.sh"
 
-# Get the cluster name from the argument
+# Get cluster name from argument
 CLUSTER_NAME=$1
 
-# Function to validate the cluster name
-validate_cluster_name
+# Validate cluster name
+validate_cluster_name "${CLUSTER_NAME}"
 
 # Function to destroy a cluster
 destroy_cluster() {
