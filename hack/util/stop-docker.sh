@@ -1,7 +1,9 @@
 #!/bin/bash
 
-source "$(dirname "$0")/logging.sh"
-source "$(dirname "$0")/helper.sh"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+source "${SCRIPT_DIR}/../util/logging.sh"
+source "${SCRIPT_DIR}/../util/helper.sh"
 
 # Function to stop Docker
 stop_docker() {

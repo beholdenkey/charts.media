@@ -1,9 +1,11 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Source required scripts
-source "$(dirname "$0")/../util/logging.sh"
-source "$(dirname "$0")/../util/helper.sh"
-source "$(dirname "$0")/../util/start-docker.sh"
+source "${SCRIPT_DIR}/../util/logging.sh"
+source "${SCRIPT_DIR}/../util/helper.sh"
+source "${SCRIPT_DIR}/../util/start-docker.sh"
 
 # Set log priority
 log_set_priority debug

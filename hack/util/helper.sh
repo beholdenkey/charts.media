@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source "$(dirname "$0")/logging.sh"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+source "${SCRIPT_DIR}/../util/logging.sh"
 
 # Check if a command is available
 # $1: command to check
