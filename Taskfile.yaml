@@ -3,46 +3,57 @@ version: "3"
 env:
   CLUSTER_NAME:
     sh: echo "dev-cluster"
-  NAMESPACE: default
+  NAMESPACE: media
   RELEASE_NAME: jellyfin
+  CHART_NAME: jellyfin
+  CHART_DIR: charts/jellyfin
 
 tasks:
   create-cluster:
     desc: Create K3d cluster
+    summary: Creates a new K3d Kubernetes cluster using the specified cluster name.
     cmds:
       - bash hack/cluster/cluster-create.sh {{.CLUSTER_NAME}}
 
   destroy-cluster:
     desc: Destroy K3d cluster
+    summary: Destroys the specified K3d Kubernetes cluster.
     cmds:
       - bash hack/cluster/cluster-destroy.sh {{.CLUSTER_NAME}}
 
   logs:
     desc: Show logs for a Helm release
+    summary: Displays logs for all containers within the specified Helm release.
     cmds:
       - kubectl logs -l app.kubernetes.io/instance={{.RELEASE_NAME}} --namespace {{.NAMESPACE}} --all-containers=true -f
 
   helm-install:
     desc: Install Helm Chart
+    summary: Installs the specified Helm chart into the Kubernetes cluster.
+    deps: ["create-cluster", "kubectl-create-namespace"]
     cmds:
-      - helm install {{.RELEASE_NAME}} charts/jellyfin --namespace {{.NAMESPACE}}
+      - helm install {{.RELEASE_NAME}} {{.CHART_DIR}} --namespace {{.NAMESPACE}}
 
   helm-uninstall:
     desc: Uninstall Helm Chart
+    summary: Uninstalls the specified Helm chart from the Kubernetes cluster.
     cmds:
       - helm uninstall {{.RELEASE_NAME}} --namespace {{.NAMESPACE}}
 
   helm-test:
     desc: Run Helm Chart Tests
+    summary: Runs tests defined in the specified Helm chart.
     cmds:
       - helm test {{.RELEASE_NAME}} --namespace {{.NAMESPACE}}
 
   helm-lint:
     desc: Lint Helm Chart
+    summary: Lints the specified Helm chart for syntax and best practices.
     cmds:
-      - helm lint charts/jellyfin
+      - helm lint {{.CHART_DIR}}
 
   kubectl-create-namespace:
     desc: Create Kubernetes namespace
+    summary: Creates a new Kubernetes namespace if it does not already exist.
     cmds:
-      - kubectl create namespace {{.NAMESPACE}} --dry-run=client -o yaml | kubectl apply -f -
+      - kubectl get ns {{.NAMESPACE}} || kubectl create namespace {{.NAMESPACE}}
