@@ -1,7 +1,5 @@
 # Home Media Helm Charts
 
-![Release Charts](https://github.com/beholdenkey/media.charts/workflows/release/badge.svg)
-
 A collection of Helm Charts for deploying home media applications.
 
 ## Usage
