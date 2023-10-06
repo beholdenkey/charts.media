@@ -6,6 +6,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/../util/logging.sh"
 source "${SCRIPT_DIR}/../util/helper.sh"
 
+# Get the cluster name from the argument
+CLUSTER_NAME=$1
+
 # Function to validate the cluster name
 validate_cluster_name
 
