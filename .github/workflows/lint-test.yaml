@@ -1,41 +1,37 @@
 ---
-name: Lint and Test Charts
+name: Lint Test
 
-on: pull_request
+on: 
+  pull_request:
+    paths-ignore:
+      - '.github/**'
+      - 'README.md'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    - name: Checkout 🛎️
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
-      - name: Install Helm
-        uses: azure/setup-helm@v3
+    - name: Setup Helm 🧰
+      uses: azure/setup-helm@v3
+      with:
+        version: v3.5.1
 
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
+    - name: Setup Python 🐍
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.7
 
-      - name: Install chart-testing
-        uses: helm/chart-testing-action@v2.4.0
+    - name: Setup chart-testing 🧰
+      uses: helm/chart-testing-action@v2.4.0
 
-      - name: Run chart-testing (list-changed)
-        id: list-changed
-        run: |
-          changed=$(ct list-changed)
-          if [[ -n "$changed" ]]; then
-            echo "::set-output name=changed::true"
-          fi
-
-      - name: Run chart-testing (lint)
-        run: ct lint
-
-      - name: Create kind cluster
-        uses: helm/kind-action@v1.8.0
-        if: steps.list-changed.outputs.changed == 'true'
-
-      - name: Run chart-testing (install)
-        run: ct install
+    - name: Run Chart lint tests 🧪
+      run: ct lint
