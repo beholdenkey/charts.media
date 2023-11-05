@@ -4,9 +4,6 @@ env:
   CLUSTER_NAME:
     sh: echo "dev-cluster"
   NAMESPACE: media
-  RELEASE_NAME: jellyfin
-  CHART_NAME: jellyfin
-  CHART_DIR: charts/jellyfin
 
 tasks:
   create-cluster:
@@ -57,3 +54,9 @@ tasks:
     summary: Creates a new Kubernetes namespace if it does not already exist.
     cmds:
       - kubectl get ns {{.NAMESPACE}} || kubectl create namespace {{.NAMESPACE}}
+
+  process-charts:
+    desc: Process all charts
+    summary: Runs tasks for all charts using the script in hack/utils.
+    cmds:
+      - bash hack/utils/charts.sh
