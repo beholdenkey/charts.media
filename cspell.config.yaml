@@ -37,6 +37,7 @@ words:
   - clouddns
   - cloudflared
   - cloudflareddns
+  - cmds
   - codeserver
   - collabora
   - configfile
