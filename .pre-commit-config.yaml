@@ -15,22 +15,57 @@
 # spell-checker: disable
 # See https://pre-commit.com for more information
 repos:
-  - repo: "https://github.com/pre-commit/pre-commit-hooks"
-    rev: "v4.4.0"
+  - repo: local
     hooks:
-      - id: "trailing-whitespace"
-      - id: "end-of-file-fixer"
-      - id: "fix-byte-order-marker"
-      - id: "mixed-line-ending"
-      - id: "check-merge-conflict"
-      - id: "check-case-conflict"
-      - id: "check-json"
-      - id: "pretty-format-json"
+      - id: commitlint
+        name: commitlint
+        description: Ensure commit message adheres to conventional commits
+        language: node
+        entry: commitlint --edit
+        additional_dependencies:
+          - '@commitlint/cli'
+          - '@commitlint/config-conventional'
+        stages:
+          - commit-msg
+
+      - id: commitlint_recent
+        name: commitlint recent
+        description: ensure all recent commit messages adhere to conventional commits
+        language: node
+        entry: bash -c 'commitlint --from $(git merge-base HEAD origin/main)'
+        always_run: true
+        pass_filenames: false
+        additional_dependencies:
+          - '@commitlint/cli'
+          - '@commitlint/config-conventional'
+        stages:
+          - manual
+
+      - id: markdownlint
+        name: markdownlint
+        description: Checks the style of Markdown files
+        entry: markdownlint
+        language: node
+        additional_dependencies:
+          - markdownlint-cli@0.32.2
+        types:
+          - markdown
+        stages:
+          - commit
+
+      - id: trufflehook
+        name: TruffleHog
+        description: Detect secrets within Repository
+        entry: trufflesecurity/trufflehog:latest git file:///src --only-verified --fail --no-update
+        always_run: true
+        language: docker_image
+        pass_filenames: false
+        stages: ["commit", "push"]
+
+  - repo: https://github.com/jnorwood/helm-docs
+    rev:  ""
+    hooks:
+      - id: helm-docs-built
         args:
-          - "--autofix"
-          - "--no-sort-keys"
-  - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.5.4
-    hooks:
-      - id: remove-crlf
-      - id: remove-tabs
+          # Make the tool search for charts only under the `charts` directory
+          - --chart-search-root=charts
