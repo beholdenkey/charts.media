@@ -9,7 +9,7 @@ tasks:
       - cp -r {{.GIT_ROOT}}/templates/chart "{{.GIT_ROOT}}/charts/{{.CHART_TYPE}}/{{.CHART}}"
       - ./.bin/go-replace -s '${CHARTNAME}' -r "{{.CHART}}" --path="{{.GIT_ROOT}}/charts/{{.CHART_TYPE}}/{{.CHART}}" --path-pattern='*.*'
       - task: dependency
-      - echo "Congratulations, charts/{{.CHART_TYPE}}/{{.CHART}} successfully generated, you can now edit chart informations ( Chart.yaml and values.yaml )"
+      - echo "Congratulations, charts/{{.CHART_TYPE}}/{{.CHART}} successfully generated, you can now edit chart information ( Chart.yaml and values.yaml )"
     status:
       - test -d "{{.GIT_ROOT}}/charts/{{.CHART_TYPE}}/{{.CHART}}"
     deps:
