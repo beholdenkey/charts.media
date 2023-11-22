@@ -1,0 +1,41 @@
+kind: ZarfPackageConfig
+metadata:
+  name: jellyfin
+  description: Deploys the Jellyfin Helm chart and
+  version: 1.3.0
+  url: https://github.com/beholdenkey/charts.media/blob/main/charts/jellyfin/README.md
+  architecture: amd64
+  labels:
+  - jellyfin
+  - media-server
+  - streaming
+  - tv
+  - video
+  - https://github.com/linuxserver/docker-jellyfin
+  - https://github.com/beholdenkey/charts.media
+components:
+  - name: jellyfin
+    description: Jellyfin Helm chart
+    required: true
+    charts:
+      - name: jellyfin
+        version: 1.3.0
+        namespace: media
+        url: oci://ghcr.io/beholdenkey/charts.media/jellyfin
+    images:
+      - lscr.io/linuxserver/jellyfin:10.8.12-1-ls234
+    actions:
+      onDeploy:
+        after:
+          - wait:
+              cluster:
+                kind: pod
+                name: app.kubernetes.io/name=jellyfin
+                namespace: media
+                condition: ready
+          - wait:
+              cluster:
+                kind: deployment
+                name: app.kubernetes.io/version=1.3.0
+                namespace: media
+                condition: available
