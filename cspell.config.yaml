@@ -139,6 +139,7 @@ words:
   - localpref
   - logfile
   - loolwsd
+  - lscr
   - mailenabled
   - mailgun
   - mapbox
