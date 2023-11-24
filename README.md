@@ -1,6 +1,6 @@
 # Home Media Helm Charts
 
-A collection of Helm Charts for deploying home media applications.
+A collection of Helm Charts for deploying home media applications and services.
 
 ## Usage
 
