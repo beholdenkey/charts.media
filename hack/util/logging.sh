@@ -10,10 +10,10 @@ NC='\033[0m' # No Color
 COLOR_LOGGING=${COLOR_LOGGING:-1}
 
 # Optional log file path
-LOG_FILE=${LOG_FILE:-}
+LOG_FILE=${LOG_FILE-}
 
 # Global log prefix
-GLOBAL_LOG_PREFIX=${GLOBAL_LOG_PREFIX:-}
+GLOBAL_LOG_PREFIX=${GLOBAL_LOG_PREFIX-}
 
 # Default log priority level (6: info)
 _logp=6
@@ -37,7 +37,7 @@ log_set_priority() {
 # Output log messages
 # $1: message to log
 log_output() {
-    if [[ -n "${LOG_FILE}" ]]; then
+    if [[ -n ${LOG_FILE} ]]; then
         echo -e "$(date '+%Y-%m-%d %H:%M:%S') $(log_prefix): $1" >>"${LOG_FILE}"
     else
         echo -e "$(date '+%Y-%m-%d %H:%M:%S') $(log_prefix): $1" >&2
@@ -57,7 +57,7 @@ log_priority() {
 # Get the log tag based on priority
 # $1: priority
 log_tag() {
-    [[ "${COLOR_LOGGING}" -eq 0 ]] && {
+    [[ ${COLOR_LOGGING} -eq 0 ]] && {
         echo "$1"
         return
     }

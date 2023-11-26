@@ -16,7 +16,7 @@ stop_docker() {
 
         # Stop all running containers
         local running_containers=$(docker ps -q)
-        if [[ -n "${running_containers}" ]]; then
+        if [[ -n ${running_containers} ]]; then
             docker stop "${running_containers}"
             log_info "Docker has stopped successfully."
         else
