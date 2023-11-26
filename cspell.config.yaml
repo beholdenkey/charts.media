@@ -45,6 +45,7 @@ words:
   - configfiles
   - configmap
   - containo
+  - conventionalcommits
   - cooldown
   - crossplay
   - csgo
