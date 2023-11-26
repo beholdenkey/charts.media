@@ -63,6 +63,7 @@ words:
   - dnsservers
   - dockerized
   - docspell
+  - dotenv
   - duplicati
   - dynmap
   - ebgp
@@ -275,6 +276,8 @@ words:
   - syncthing
   - tailscale
   - targetport
+  - Taskfile
+  - taskfiles
   - tccr
   - teamspeak
   - testpassword
@@ -283,6 +286,7 @@ words:
   - tlsoptions
   - tlsstores
   - Tolerations
+  - toplevel
   - totp
   - traefik
   - traefikservices
