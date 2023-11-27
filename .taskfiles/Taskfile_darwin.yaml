@@ -1,7 +1,7 @@
 version: "3"
 
 env:
-  BREW: "ansible kubectl terraform pre-commit shellcheck yamllint ansible-lint helm yq jq jc tfsec terragrunt"
+  BREW: "kind ansible kubectl terraform pre-commit shellcheck yamllint ansible-lint helm yq jq jc tfsec terragrunt"
 
 tasks:
   check-brew:
