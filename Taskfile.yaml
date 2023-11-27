@@ -14,5 +14,6 @@ tasks:
       - task --list
 
 includes:
+  tools: .taskfiles/Taskfile_tools.yaml
   kind: .taskfiles/Taskfile_kind.yaml
   darwin: .taskfiles/Taskfile_darwin.yaml
