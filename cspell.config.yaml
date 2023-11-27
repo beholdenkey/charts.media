@@ -41,6 +41,7 @@ words:
   - cmds
   - codeserver
   - collabora
+  - commitlint
   - configfile
   - configfiles
   - configmap
