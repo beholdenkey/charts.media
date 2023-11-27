@@ -1,8 +1,0 @@
-{
-    "devDependencies": {
-        "@semantic-release/changelog": "^6.0.3",
-        "@semantic-release/commit-analyzer": "^10.0.1",
-        "@semantic-release/git": "^10.0.1",
-        "conventional-changelog-conventionalcommits": "^6.1.0"
-    }
-}
