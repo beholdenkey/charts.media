@@ -1,0 +1,27 @@
+version: "3"
+
+env:
+  BREW: "kind ansible kubectl terraform pre-commit shellcheck yamllint ansible-lint helm yq jq jc tfsec terragrunt"
+
+tasks:
+  check-brew:
+    desc: "Check if Homebrew is installed"
+    cmds:
+      - command -v brew >/dev/null 2>&1 || { echo >&2 "Homebrew not installed. Please install it first."; exit 1; }
+    silent: true
+
+  install:
+    silent: true
+    desc: "Install/Update all required dependencies"
+    deps: [check-brew]
+    cmds:
+      - brew upgrade -g
+      - |
+        for tool in {{.BREW}}; do
+          if ! brew list $tool &>/dev/null; then
+            brew install $tool
+          else
+            echo "$tool is already installed and up-to-date."
+          fi
+        done
+    failOnError: true

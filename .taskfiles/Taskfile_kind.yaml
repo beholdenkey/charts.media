@@ -1,0 +1,44 @@
+version: "3"
+
+tasks:
+  cluster-info:
+    desc: "Get detailed information about the Kubernetes cluster"
+    cmds:
+      - kubectl cluster-info --context kind-{{.CLUSTER_NAME}}
+    failOnError: true
+
+  create-cluster:
+    desc: "Create a new Kubernetes cluster using Kind"
+    cmds:
+      - kind create cluster --name '{{.CLUSTER_NAME}}' --config kind-config.yaml
+    status:
+      - kubectl get nodes --context kind-{{.CLUSTER_NAME}}
+    failOnError: true
+    timeout: 300 # 5 minutes
+    shell: "/bin/bash"
+    preconditions:
+      - sh: test -f kind-config.yaml
+        msg: "kind-config.yaml file not found"
+    requires:
+      vars: [CLUSTER_NAME]
+
+  setup-kong-gateway:
+    desc: "Set up Kong Gateway"
+    cmds:
+      - kubectl apply -f https://docs.konghq.com/assets/gateway-operator/v1.0.3/crds.yaml --server-side
+      - kubectl apply -f https://docs.konghq.com/assets/gateway-operator/v1.0.3/default.yaml
+      - kubectl -n kong-system wait --for=condition=Available=true --timeout=120s deployment/gateway-operator-controller-manager
+    failOnError: true
+    timeout: 300 # 5 minutes
+    shell: "/bin/bash"
+
+  delete-cluster:
+    silent: true
+    desc: "Safely delete the specified Kubernetes cluster"
+    cmds:
+      - if kind get clusters | grep -q '{{.CLUSTER_NAME}}'; then kind delete cluster --name '{{.CLUSTER_NAME}}'; else echo "Cluster '{{.CLUSTER_NAME}}' does not exist."; fi
+    failOnError: true
+    timeout: 180 # 3 minutes
+    shell: "/bin/bash"
+    requires:
+      vars: [CLUSTER_NAME]

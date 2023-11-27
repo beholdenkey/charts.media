@@ -41,6 +41,7 @@ words:
   - cmds
   - codeserver
   - collabora
+  - commitlint
   - configfile
   - configfiles
   - configmap
@@ -63,6 +64,7 @@ words:
   - dnsservers
   - dockerized
   - docspell
+  - dotenv
   - duplicati
   - dynmap
   - ebgp
@@ -193,6 +195,8 @@ words:
   - ornias
   - ovpn
   - passwrd
+  - pbcopy
+  - pbpaste
   - penpot
   - pgid
   - photoprism
@@ -248,6 +252,7 @@ words:
   - serverstransports
   - serviceexpert
   - sgateway
+  - shellcheck
   - signup
   - smallblock
   - snmp
@@ -275,6 +280,8 @@ words:
   - syncthing
   - tailscale
   - targetport
+  - Taskfile
+  - taskfiles
   - tccr
   - teamspeak
   - testpassword
@@ -283,6 +290,7 @@ words:
   - tlsoptions
   - tlsstores
   - Tolerations
+  - toplevel
   - totp
   - traefik
   - traefikservices
