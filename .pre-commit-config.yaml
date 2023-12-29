@@ -23,8 +23,8 @@ repos:
         language: node
         entry: commitlint --edit
         additional_dependencies:
-          - '@commitlint/cli'
-          - '@commitlint/config-conventional'
+          - "@commitlint/cli"
+          - "@commitlint/config-conventional"
         stages:
           - commit-msg
 
@@ -36,8 +36,8 @@ repos:
         always_run: true
         pass_filenames: false
         additional_dependencies:
-          - '@commitlint/cli'
-          - '@commitlint/config-conventional'
+          - "@commitlint/cli"
+          - "@commitlint/config-conventional"
         stages:
           - manual
 
@@ -63,7 +63,7 @@ repos:
         stages: ["commit", "push"]
 
   - repo: https://github.com/jnorwood/helm-docs
-    rev:  ""
+    rev: ""
     hooks:
       - id: helm-docs-built
         args:
