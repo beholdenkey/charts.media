@@ -24,4 +24,4 @@ annotations:
   helm.github.io/license: MIT
   helm.github.io/images: |
     - name: linuxserver/jellyfin
-      image: docker.io/linuxserver/jellyfin:10.8.12-1-ls234
+      image: docker.io/linuxserver/jellyfin:10.8.13-1-ls240
