@@ -24,4 +24,3 @@ tasks:
             echo "$tool is already installed and up-to-date."
           fi
         done
-    failOnError: true
