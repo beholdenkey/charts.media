@@ -3,8 +3,8 @@ apiVersion: v2
 name: jellyfin
 description: Jellyfin Helm chart
 type: application
-version: 1.4.0
-appVersion: 10.8.12
+version: 1.5.0
+appVersion: 10.8.13
 home: https://jellyfin.org
 keywords:
   - jellyfin
@@ -24,4 +24,4 @@ annotations:
   helm.github.io/license: MIT
   helm.github.io/images: |
     - name: linuxserver/jellyfin
-      image: docker.io/linuxserver/jellyfin:10.8.13-1-ls240
+      image: docker.io/linuxserver/jellyfin:10.8.13-1-ls241
