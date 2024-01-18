@@ -122,8 +122,10 @@ words:
   - kiwix
   - kjeld
   - kube
+  - kubeadm
   - kubeconfig
   - kubectl
+  - kubelet
   - kubernetes
   - lancache
   - ldapldap
