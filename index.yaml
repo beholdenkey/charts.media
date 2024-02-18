@@ -4,6 +4,36 @@ entries:
   - annotations:
       helm.github.io/images: |
         - name: linuxserver/jellyfin
+          image: docker.io/linuxserver/jellyfin:10.8.13-1-ls246
+      helm.github.io/license: MIT
+    apiVersion: v2
+    appVersion: 10.8.13
+    created: "2024-02-18T18:27:44.874079212Z"
+    description: Jellyfin Helm chart
+    digest: f15e80be4e10b5eff9ae9a42f3b7be2d8df0b97c5ede2dc0bd0bfc666bb99234
+    home: https://jellyfin.org
+    icon: https://github.com/beholdenkey/charts.media/jellyfin.png
+    keywords:
+    - jellyfin
+    - media-server
+    - streaming
+    - tv
+    - video
+    maintainers:
+    - email: justthered63@gmail.com
+      name: Justin Bailey
+    name: jellyfin
+    sources:
+    - https://github.com/linuxserver/docker-jellyfin
+    - https://hub.docker.com/r/linuxserver/jellyfin
+    - https://github.com/beholdenkey/charts.media
+    type: application
+    urls:
+    - https://github.com/beholdenkey/charts.media/releases/download/jellyfin-1.6.0/jellyfin-1.6.0.tgz
+    version: 1.6.0
+  - annotations:
+      helm.github.io/images: |
+        - name: linuxserver/jellyfin
           image: docker.io/linuxserver/jellyfin:10.8.13-1-ls241
       helm.github.io/license: MIT
     apiVersion: v2
@@ -272,4 +302,4 @@ entries:
     urls:
     - https://github.com/beholdenkey/charts.media/releases/download/jellyfin-chart-1.0.0/jellyfin-1.0.0.tgz
     version: 1.0.0
-generated: "2024-01-18T00:56:47.032456935Z"
+generated: "2024-02-18T18:27:44.874146919Z"
