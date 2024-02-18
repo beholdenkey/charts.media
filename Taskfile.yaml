@@ -1,19 +1,13 @@
 ---
 version: "3"
 
-dotenv: [".env"]
-
-vars:
-  PROJECT_ROOT:
-    sh: git rev-parse --show-toplevel
+includes:
+  workstation: .taskfiles/Workstations/Taskfile.yaml
+  pre-commit: .taskfiles/PreCommit/Taskfile.yaml
 
 tasks:
+
   default:
-    silent: true
+    desc: Show help
     cmds:
       - task --list
-
-includes:
-  tools: .taskfiles/Taskfile_tools.yaml
-  kind: .taskfiles/Taskfile_kind.yaml
-  darwin: .taskfiles/Taskfile_darwin.yaml
